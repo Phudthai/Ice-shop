@@ -13,16 +13,27 @@ const BuildMenu3D: React.FC = () => {
 
   const items = {
     furniture: [
-      { id: 'table_wood', label: 'Wood Table', icon: '/src/assets/sprites/table_wood.png' },
-      { id: 'table_marble', label: 'Marble Table', icon: '/src/assets/sprites/table_marble.png' },
-      { id: 'coffee_machine', label: 'Coffee Station', icon: '/src/assets/sprites/coffee_machine.png' }
+      { id: 'table_wood', label: 'โต๊ะไม้', icon: '/src/assets/sprites/table_wood.png' },
+      { id: 'table_marble', label: 'โต๊ะหินอ่อน', icon: '/src/assets/sprites/table_marble.png' },
+      { id: 'table_glass', label: 'โต๊ะกระจก', icon: '/src/assets/sprites/table_glass.png' },
+      { id: 'coffee_machine', label: 'เครื่องชงกาแฟ', icon: '/src/assets/sprites/coffee_machine.png' }
     ],
     decor: [
-      { id: 'dec_plant', label: 'Plant', icon: '/src/assets/sprites/dec_plant.png' },
-      { id: 'dec_lamp', label: 'Lamp', icon: '/src/assets/sprites/dec_lamp.png' }
+      { id: 'dec_plant_small', label: 'ต้นไม้เล็ก', icon: '/src/assets/sprites/dec_plant.png' },
+      { id: 'dec_plant_large', label: 'ต้นไม้ใหญ่', icon: '/src/assets/sprites/dec_plant.png' },
+      { id: 'dec_lamp_floor', label: 'โคมไฟตั้งพื้น', icon: '/src/assets/sprites/dec_lamp.png' },
+      { id: 'dec_lamp_table', label: 'โคมไฟตั้งโต๊ะ', icon: '/src/assets/sprites/dec_lamp.png' },
+      { id: 'dec_shelf_wood', label: 'ชั้นวางไม้', icon: '/src/assets/sprites/dec_shelf_wood.png' },
+      { id: 'dec_rug_red', label: 'พรมแดง', icon: '/src/assets/sprites/dec_rug.png' },
+      { id: 'dec_rug_blue', label: 'พรมน้ำเงิน', icon: '/src/assets/sprites/dec_rug.png' },
+      { id: 'dec_clock', label: 'นาฬิกา', icon: '/src/assets/sprites/dec_clock.png' },
+      { id: 'dec_neon_sign', label: 'ป้ายไฟนีออน', icon: '/src/assets/sprites/dec_neon.png' },
+      { id: 'dec_speaker', label: 'ลำโพง', icon: '/src/assets/sprites/dec_speaker.png' }
     ],
     surfaces: [
-      { id: 'wood_floor', label: 'Wood Floor', icon: '/src/assets/sprites/wood_floor.png' }
+      { id: 'wood_floor', label: 'พื้นไม้', icon: '/src/assets/sprites/wood_floor.png' },
+      { id: 'floor_checkered', label: 'พื้นตาราง', icon: '/src/assets/sprites/floor_checkered.png' },
+      { id: 'floor_modern', label: 'พื้นโมเดิร์น', icon: '/src/assets/sprites/floor_modern.png' }
     ]
   };
 
