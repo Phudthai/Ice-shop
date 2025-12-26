@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { GameStoreActions } from '../GameStore';
 
 export class Furniture extends Phaser.GameObjects.Container {
   private sprite: Phaser.GameObjects.Sprite;
@@ -8,9 +9,16 @@ export class Furniture extends Phaser.GameObjects.Container {
   public type: string;
   public gridWidth: number;
   public gridHeight: number;
+  public gridX: number = 0;
+  public gridY: number = 0;
+  public rotationAngle: number = 0; // 0, 90, 180, 270
   
   public isSelected: boolean = false;
   public isMoving: boolean = false;
+  
+  // Seating System
+  public occupants: any[] = []; // Track customers seated here
+  public capacity: number = 2;   // Default 2 people per table
 
   constructor(scene: Phaser.Scene, x: number, y: number, type: string, texture: string, width: number = 32, height: number = 32) {
     super(scene, x, y);
@@ -39,6 +47,16 @@ export class Furniture extends Phaser.GameObjects.Container {
     this.createMenu();
     
     scene.add.existing(this);
+
+    this.on('destroy', () => {
+      GameStoreActions.removeFurniture(this.id);
+      this.occupants.forEach(customer => {
+        if (customer && customer.leave) {
+          customer.leave(false);
+        }
+      });
+      this.occupants = [];
+    });
   }
 
   private createMenu() {
@@ -114,8 +132,34 @@ export class Furniture extends Phaser.GameObjects.Container {
     this.scene.input.setDraggable(this, false);
   }
 
-  setGridPosition(x: number, y: number) {
+  setGridPosition(x: number, y: number, gridX?: number, gridY?: number) {
     // x, y are the center coordinates of the grid tile
     this.setPosition(x, y);
+    if (gridX !== undefined) this.gridX = gridX;
+    if (gridY !== undefined) this.gridY = gridY;
+    
+    // Update store
+    GameStoreActions.upsertFurniture({
+      id: this.id,
+      type: this.type,
+      gridX: this.gridX,
+      gridY: this.gridY,
+      rotation: this.rotationAngle
+    });
+  }
+
+  rotate() {
+    this.rotationAngle = (this.rotationAngle + 90) % 360;
+    GameStoreActions.upsertFurniture({
+      id: this.id,
+      type: this.type,
+      gridX: this.gridX,
+      gridY: this.gridY,
+      rotation: this.rotationAngle
+    });
+  }
+
+  removeFromGame() {
+    this.destroy();
   }
 }

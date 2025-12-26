@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { GameStoreActions } from '../GameStore';
 
 export class ProgressionManager {
   private scene: Phaser.Scene;
@@ -65,5 +66,6 @@ export class ProgressionManager {
   private updateUI() {
     this.xpText.setText(`Level ${this.level} (${this.xp}/${this.nextLevelXp} XP)`);
     this.goldText.setText(`Gold: ${this.gold}`);
+    GameStoreActions.updateProgression(this.level, this.gold, this.xp);
   }
 }

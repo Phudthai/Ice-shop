@@ -19,5 +19,5 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
     },
   },
   pixelArt: true, // Crucial for pixel art style
-  scene: [MainMenuScene, GameplayScene],
+  scene: [GameplayScene, MainMenuScene],
 };

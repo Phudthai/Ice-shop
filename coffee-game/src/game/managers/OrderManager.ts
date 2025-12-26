@@ -4,9 +4,9 @@ import { Customer, Order } from '../entities/Customer';
 export class OrderManager {
   private scene: Phaser.Scene;
   private customers: Customer[] = [];
-  // private spawnTimer: Phaser.Time.TimerEvent;
   private maxCustomers: number = 5;
   private customerIdCounter: number = 0;
+  public spawnTimer: Phaser.Time.TimerEvent;
 
   // Basic recipes for prototype
   private recipes: Order[] = [
@@ -19,7 +19,7 @@ export class OrderManager {
     this.scene = scene;
     
     // Start spawning customers
-    this.scene.time.addEvent({
+    this.spawnTimer = this.scene.time.addEvent({
       delay: 5000, // Spawn every 5 seconds
       callback: this.spawnCustomer,
       callbackScope: this,
@@ -28,6 +28,9 @@ export class OrderManager {
   }
 
   update(time: number, delta: number) {
+    // Remove destroyed customers
+    this.customers = this.customers.filter(c => c.active && c.scene);
+    
     // Update all customers
     this.customers.forEach(c => c.update(time, delta));
   }

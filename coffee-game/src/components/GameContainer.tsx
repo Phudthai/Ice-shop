@@ -6,13 +6,18 @@ export const GameContainer: React.FC = () => {
   const gameRef = useRef<Phaser.Game | null>(null);
 
   useEffect(() => {
+    console.log('GameContainer: Mounting');
+    let game: Phaser.Game | null = null;
+    
     if (!gameRef.current) {
-      gameRef.current = new Phaser.Game(GameConfig);
+      game = new Phaser.Game(GameConfig);
+      gameRef.current = game;
     }
 
     return () => {
-      if (gameRef.current) {
-        gameRef.current.destroy(true);
+      console.log('GameContainer: Unmounting');
+      if (game) {
+        game.destroy(true);
         gameRef.current = null;
       }
     };

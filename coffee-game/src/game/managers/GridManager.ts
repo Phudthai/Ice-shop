@@ -58,7 +58,7 @@ export class GridManager {
     return { x, y };
   }
 
-  // Convert Screen Pixels (x, y) to Grid Coordinates (col, row)
+  // Convert Screen Pixels (x, y) to Grid Coordinates (col, row) (RAW Fractional values)
   isometricToCartesian(x: number, y: number): { col: number, row: number } {
     const adjX = x - this.originX;
     const adjY = y - this.originY;
@@ -66,20 +66,22 @@ export class GridManager {
     const col = (adjX / (this.tileWidth / 2) + adjY / (this.tileHeight / 2)) / 2;
     const row = (adjY / (this.tileHeight / 2) - adjX / (this.tileWidth / 2)) / 2;
 
-    return { 
-      col: Math.round(col), 
-      row: Math.round(row) 
-    };
+    return { col, row };
   }
 
-  snapToGrid(x: number, y: number): { x: number, y: number } {
-    const { col, row } = this.isometricToCartesian(x, y);
+  snapToGrid(x: number, y: number): { x: number, y: number, col: number, row: number } {
+    const raw = this.isometricToCartesian(x, y);
+    
+    // Explicitly round for snapping
+    const col = Math.round(raw.col);
+    const row = Math.round(raw.row);
     
     // Clamp to grid bounds
     const clampedCol = Phaser.Math.Clamp(col, 0, this.cols - 1);
     const clampedRow = Phaser.Math.Clamp(row, 0, this.rows - 1);
     
-    return this.cartesianToIsometric(clampedCol, clampedRow);
+    const pos = this.cartesianToIsometric(clampedCol, clampedRow);
+    return { ...pos, col: clampedCol, row: clampedRow };
   }
   
   getGridSize(): number {
